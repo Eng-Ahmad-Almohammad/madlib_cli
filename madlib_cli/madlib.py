@@ -1,5 +1,5 @@
 import re
-
+answers = []
 def welcome():
     print('Welcom to madlib ')
     print('*****************************************')
@@ -9,44 +9,43 @@ def welcome():
     print('**   You will get a funny sentence     **')
     print('*****************************************')
 
-    first_adjective = input('Please input an Adjective ')
-    second_adjective= input('Please input a new Adjective ')
-    first_name = input('Please input A First Name ')
-    past_tense_verb = input('Please input Past Tense Verb ')
-    second_name = input('Please input A First Name ')
-    third_adjective = input('Please input an Adjective ')
-    fourth_adjective= input('Please input a new Adjective ')
-    plural_noun = input('Please input a Plural Noun ')
-    anwers= [first_adjective,second_adjective, first_name, past_tense_verb, second_name, third_adjective, fourth_adjective, plural_noun ]
-    return anwers
+    
 
 def read_template():
      with open('assetes/madlib.txt','r') as f:
         content= f.read().strip()
      return content
 
-print(read_template())
+
 
 def parse(string):
+    """
+    If you want to to test parse function you should to comment the lins 31 and 32
+    """
+
+
     data = re.findall(r"\{(.*?)\}",string)
     j = 0
+    
     for i in data:
-        
-        string = string.replace(i,f'{j}',1)
+        # user_data= input(f'Please add a/an {i} ')
+        # answers.append(user_data)
+        string = string.replace(i,f'{j}',1).strip()
         j +=1
 
     return string
 
 
 def merge(string):
-    reslut = string.format(*welcome())
+    reslut = string.format(*answers)
     with open('assetes/userIn.txt','w') as f:
         content = f.write(reslut)
     return reslut
 
 if __name__ == "__main__":
-    
+    welcome()
     print(merge(parse(read_template())))
+    print(answers)
 
 
 
